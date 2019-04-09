@@ -1,0 +1,230 @@
+
+sudo apt install fswebcam
+
+fswebcam -d /dev/video1 -r800x600 -D 1 Resim1.jpg
+
+video1 kaynağında 800x600 çözünürlükte bir resim al, fakat önce 1 Saniye bekle. Sonra sonunu Resim1.jpg olarak kaydet
+
+================================================================
+
+
+sudo apt-get install v4l-utils
+
+v4l2-ctl --list-formats-ext
+
+
+
+
+KAYNAK: https://superuser.com/questions/639738/how-can-i-list-the-available-video-modes-for-a-usb-webcam-in-linux
+
+
+To list all the devices:
+	uvcdynctrl -l
+
+
+If you use uvc controls for a webcam, another method is :
+	uvcdynctrl -f
+
+
+List available formats:
+
+	v4l2-ctl -d /dev/video0 --list-formats
+
+
+
+List All Video Devices:
+	for d in /dev/video* ; do echo $d ; v4l2-ctl --device=$d -D --list-formats  ; echo '===============' ; done
+
+
+
+Video0'da Bağlı Olan Cihazın Tüm Bilgileri:
+
+	v4l2-ctl -D -d /dev/video0 --list-formats-ext
+
+
+
+Video Kaynaklarının Adlarını Listele:
+--list-devices     list all v4l devices
+
+	v4l2-ctl --list-devices
+
+
+
+Video1 Kaynağı Hakkında Bilgi Ver: ********
+	
+	v4l2-ctl --all -d /dev/video1
+
+				Driver Info (not using libv4l2):
+					Driver name   : uvcvideo
+					Card type     : YW MS2300D
+					Bus info      : usb-0000:00:1a.7-1.2
+					Driver version: 4.10.17
+					Capabilities  : 0x84200001
+						Video Capture
+						Streaming
+						Extended Pix Format
+						Device Capabilities
+					Device Caps   : 0x04200001
+						Video Capture
+						Streaming
+						Extended Pix Format
+				Priority: 2
+				Video input : 0 (Camera 1: ok)
+				Format Video Capture:
+					Width/Height      : 640/480
+					Pixel Format      : 'MJPG'
+					Field             : None
+					Bytes per Line    : 0
+					Size Image        : 1703936
+					Colorspace        : Default
+					Transfer Function : Default
+					YCbCr/HSV Encoding: Default
+					Quantization      : Default
+					Flags             : 
+				Crop Capability Video Capture:
+					Bounds      : Left 0, Top 0, Width 640, Height 480
+					Default     : Left 0, Top 0, Width 640, Height 480
+					Pixel Aspect: 1/1
+				Selection: crop_default, Left 0, Top 0, Width 640, Height 480
+				Selection: crop_bounds, Left 0, Top 0, Width 640, Height 480
+				Streaming Parameters Video Capture:
+					Capabilities     : timeperframe
+					Frames per second: 30.000 (30/1)
+					Read buffers     : 0
+				                     brightness (int)    : min=0 max=255 step=1 default=128 value=128
+				                       contrast (int)    : min=0 max=31 step=1 default=16 value=16
+				                     saturation (int)    : min=0 max=31 step=1 default=16 value=16
+				                            hue (int)    : min=-180 max=180 step=1 default=0 value=0
+				 white_balance_temperature_auto (bool)   : default=1 value=1
+				                          gamma (int)    : min=0 max=127 step=1 default=64 value=64
+				           power_line_frequency (menu)   : min=0 max=2 default=2 value=2
+				      white_balance_temperature (int)    : min=0 max=255 step=1 default=128 value=128 flags=inactive
+				                      sharpness (int)    : min=0 max=15 step=1 default=1 value=1
+				                  exposure_auto (menu)   : min=0 max=3 default=2 value=2
+
+
+
+Video1 Kaynağının kullanabileceği formatlar  **********************
+
+	v4l2-ctl -d /dev/video1 --list-formats-ext
+
+				ioctl: VIDIOC_ENUM_FMT
+					Index       : 0
+					Type        : Video Capture
+					Pixel Format: 'MJPG' (compressed)
+					Name        : Motion-JPEG
+						Size: Discrete 640x480
+							Interval: Discrete 0.033s (30.000 fps)
+						Size: Discrete 800x600
+							Interval: Discrete 0.067s (15.000 fps)
+						Size: Discrete 1280x720
+							Interval: Discrete 0.033s (30.000 fps)
+						Size: Discrete 1024x768
+							Interval: Discrete 0.067s (15.000 fps)
+						Size: Discrete 1280x1024
+							Interval: Discrete 0.125s (8.000 fps)
+						Size: Discrete 1600x1200
+							Interval: Discrete 0.067s (15.000 fps)
+						Size: Discrete 640x480
+							Interval: Discrete 0.033s (30.000 fps)
+
+
+
+Video1 Kaynağı İçin Konrol Değerlerini ve alabileceği değerleri listele:
+-l, --list-ctrls        display all controls and their values [VIDIOC_QUERYCTRL]
+-L, --list-ctrls-menus  display all controls and their menus [VIDIOC_QUERYMENU]
+
+	v4l2-ctl -d /dev/video0 -l  *********************
+
+				                     brightness (int)    : min=0 max=255 step=1 default=128 value=128
+				                       contrast (int)    : min=0 max=31 step=1 default=16 value=16
+				                     saturation (int)    : min=0 max=31 step=1 default=16 value=16
+				                            hue (int)    : min=-180 max=180 step=1 default=0 value=0
+				 white_balance_temperature_auto (bool)   : default=1 value=1
+				                          gamma (int)    : min=0 max=127 step=1 default=64 value=64
+				           power_line_frequency (menu)   : min=0 max=2 default=2 value=2
+				      white_balance_temperature (int)    : min=0 max=255 step=1 default=128 value=128 flags=inactive
+				                      sharpness (int)    : min=0 max=15 step=1 default=1 value=1
+				                  exposure_auto (menu)   : min=0 max=3 default=2 value=2
+
+
+
+
+
+
+
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+
+
+welcomeui.py
+
+    def temp_save(self):
+        try:
+            if not QDir().exists(QDir.homePath() + "/.argemet" + "/temp"):
+                QDir().mkdir(QDir.homePath() + "/.argemet" + "/temp")
+            FileName = QDir.homePath() + "/.argemet" + "/temp/" + QDateTime.currentDateTime().toString("yyyy-MM-dd_hh-mm-ss") + ".jpg"
+
+            encode_param=(cv2.IMWRITE_JPEG_QUALITY, 85)
+            cv2.imwrite(FileName, self.cvThread.frame, encode_param )
+
+
+    def capStart(self):
+        self.cap = cv2.VideoCapture(0)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH,  1600)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1200)
+
+
+
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+#####################################################################################################
+
+
+
+UXGA	4:3		1600x1200	1600x1200	pass
+720p	16:9	1280x720	1280x720	pass
+SVGA	4:3		800x600		800x600		pass
+VGA		4:3		640x480		640x480		pass
+
+
+import cv2
+#capture from camera at location 1
+cap = cv2.VideoCapture(1)
+cap.set(3,1280) # 4. CV_CAP_PROP_FRAME_WIDTH Width of the frames in the video stream.
+cap.set(4,1024) # 5. CV_CAP_PROP_FRAME_HEIGHT Height of the frames in the video stream.
+cap.set(15, 0.1)
+
+
+0. CV_CAP_PROP_POS_MSEC Current position of the video file in milliseconds.
+1. CV_CAP_PROP_POS_FRAMES 0-based index of the frame to be decoded/captured next.
+3. CV_CAP_PROP_POS_AVI_RATIO Relative position of the video file
+4. CV_CAP_PROP_FRAME_WIDTH Width of the frames in the video stream.
+5. CV_CAP_PROP_FRAME_HEIGHT Height of the frames in the video stream.
+6. CV_CAP_PROP_FPS Frame rate.
+7. CV_CAP_PROP_FOURCC 4-character code of codec.
+8. CV_CAP_PROP_FRAME_COUNT Number of frames in the video file.
+9. CV_CAP_PROP_FORMAT Format of the Mat objects returned by retrieve() .
+10. CV_CAP_PROP_MODE Backend-specific value indicating the current capture mode.
+11. CV_CAP_PROP_BRIGHTNESS Brightness of the image (only for cameras).
+12. CV_CAP_PROP_CONTRAST Contrast of the image (only for cameras).
+13. CV_CAP_PROP_SATURATION Saturation of the image (only for cameras).
+14. CV_CAP_PROP_HUE Hue of the image (only for cameras).
+15. CV_CAP_PROP_GAIN Gain of the image (only for cameras).
+16. CV_CAP_PROP_EXPOSURE Exposure (only for cameras).
+17. CV_CAP_PROP_CONVERT_RGB Boolean flags indicating whether images should be converted to RGB.
+18. CV_CAP_PROP_WHITE_BALANCE Currently unsupported
+19. CV_CAP_PROP_RECTIFICATION Rectification flag for stereo cameras (note: only supported by DC1394 v 2.x backend currently)
+
+
+
